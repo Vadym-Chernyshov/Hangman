@@ -1,4 +1,5 @@
-﻿using static System.Net.Mime.MediaTypeNames;
+﻿using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Hangman
 {
@@ -6,7 +7,9 @@ namespace Hangman
     {
         static void Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.InputEncoding = Encoding.GetEncoding(1251);
 
             bool win = false;
             //створюємо базу наших слів(взяв назви творів Шевченка)
@@ -39,10 +42,7 @@ namespace Hangman
                 }
 
                 Console.Write("Введіть вашу літеру: ");
-                string? userInput = Console.ReadLine();
-
-                //костиль для проблеми з вводом букви і у систему               
-                if (userInput == "?") userInput = "і";
+                string? userInput = Console.ReadLine();                
 
                 Console.WriteLine();
                 if (char.TryParse(userInput, out char inputLetter) && //перевірка на парсинг
